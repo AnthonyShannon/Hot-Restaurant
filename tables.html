@@ -13,16 +13,31 @@
 </head>
 
 <body>
-    
+
     <div class="jumbotron" style="text-align: center">
         <h1 class="display-4"><i class="fab fa-gripfire"></i> Hot Restaurant</h1>
         <hr class="my-4">
         <h3>Current Reservations and waiting list</h3>
-        <a class="btn btn-danger btn-lg" href="./reserve.html" role="button" style="margin: 10px">Make Reservation</a><a class="btn btn-light btn-lg" href="./home.html" role="button" style="margin: 10px"><i class="fas fa-home"></i></a>
+        <a class="btn btn-danger btn-lg" href="/reserve" role="button" style="margin: 10px">Make Reservation</a><a
+            class="btn btn-light btn-lg" href="/" role="button" style="margin: 10px"><i class="fas fa-home"></i></a>
     </div>
 
+    <div class="card">
+        <div class="card-header">
+            <h3><strong>Current Resevations</strong></h3>
+        </div>
+        <div class="card-body" id="allRes">
 
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h3><strong>Wait List</strong></h3>
+        </div>
+        <div class="card-body" id="wait">
 
+        </div>
+    </div>
     <script src="http://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -31,6 +46,38 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+        $.get("/api/tables", function (data) {
+            for (var i = 0; i < 5; i++) {
+                console.log(data[i]);
+                var listGroupItem = $("<li class='list-group-item'>");
+
+                listGroupItem.append($("<h2>").text("Name: " + data[i].name));
+                listGroupItem.append($("<h3>").text("Phone: " + data[i].phone));
+                listGroupItem.append($("<h3>").text("Email: " + data[i].email));
+                listGroupItem.append($("<h3>").text("Unique Id: " + data[i].id));
+
+                $("#allRes").append(listGroupItem);
+            };
+        });
+        $.get("/api/tables", function (data) {
+            for (var i = 5; i < data.length; i++) {
+                console.log(data[i]);
+                var listGroupItem = $("<li class='list-group-item'>");
+
+                listGroupItem.append($("<h2>").text("Name: " + data[i].name));
+                listGroupItem.append($("<h3>").text("Phone: " + data[i].phone));
+                listGroupItem.append($("<h3>").text("Email: " + data[i].email));
+                listGroupItem.append($("<h3>").text("Unique Id: " + data[i].id));
+
+                $("#wait").append(listGroupItem);
+            };
+        });
+    </script>
+
+
 
 </body>
 
